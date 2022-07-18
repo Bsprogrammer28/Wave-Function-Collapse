@@ -104,9 +104,9 @@ while True:
         gridCopy = sorted(grid, key=lambda x: x['Options'])
         length = len(gridCopy[0]['Options'])
 
-        for i in range(len(gridCopy)):
-            if len(gridCopy[i]['Options']) > len:
-                gridCopy.sli
+#         for i in range(len(gridCopy)):
+#             if len(gridCopy[i]['Options']) > len:
+#                 gridCopy.sli
 
         for i in range(DIM):
             for j in range(DIM):
