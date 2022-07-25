@@ -1,7 +1,6 @@
-from numpy import tile
-from pandas import options
 import pygame
 from random import randint, choice
+
 pygame.init()
 
 DIM = 2
@@ -11,6 +10,9 @@ white = (255, 255, 255)
 black = (0, 0, 0)
 tiles = []
 grid = []
+
+screen = pygame.display.set_mode((height, width))
+pygame.display.set_caption('Wave Function Collapse')
 
 BLANK = 0
 UP = 1
@@ -57,8 +59,17 @@ for i in range(DIM*DIM):
         "Options": [BLANK, UP, RIGHT, DOWN, LEFT]
     })
 
+# Functions
 def spawnImage(img, x, y):
     screen.blit(img, (x, y))
+
+def elementExists(a_list, index):
+    return index < len(a_list)
+
+def spawnText(text, W, H, R=255, G=255, B=255):
+    my_font = pygame.font.SysFont('Comic Sans MS', 30)
+    text_surface = my_font.render(text, False, (R, G, B))
+    screen.blit(text_surface, (W, H))
 
 
 path = "E:/Work/Programming/Learning New Things/Wave Function Collapse/inPython/"
@@ -79,8 +90,6 @@ seed = {
 for i in range(len(tiles)):
     tiles[i] = pygame.transform.scale(tiles[i], (width/DIM, height/DIM))
 
-screen = pygame.display.set_mode((height, width))
-pygame.display.set_caption('Wave Function Collapse')
 
 while True:
     # display_surface.blit(image, (0, 0))
@@ -89,34 +98,24 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             quit()
+    
+        # spawnText(, 200, 200)
 
         w = width/DIM
         h = height/DIM
         # pygame.Rect(x, y, width, height)
         for i in range(DIM):
             for j in range(DIM):
-                break
+                 pygame.draw.rect(screen, white, pygame.Rect(i*w, j*h, width/DIM, height/DIM), 2)
 
         spawnImage(tiles[seed['image']], seed['posX']* w, seed['posY']*h)
         grid[seed['posX']+seed['posY']*DIM]['Collapsed'] = True
-        grid[seed['posX']+seed['posY']*DIM]['Options'] = [BLANK]
+        # grid[seed['posX']+seed['posY']*DIM]['Options'] = [BLANK, UP]
 
         gridCopy = sorted(grid, key=lambda x: x['Options'])
         length = len(gridCopy[0]['Options'])
+        print(gridCopy)                   
 
-#         for i in range(len(gridCopy)):
-#             if len(gridCopy[i]['Options']) > len:
-#                 gridCopy.sli
 
-        for i in range(DIM):
-            for j in range(DIM):
-                cell = grid[i+j*DIM]
-                if(cell['Collapsed']):
-                    index = cell['Options'][0]
-                    spawnImage(tiles[0], i*w, j*h)
-                else:
-                    pygame.draw.rect(screen, white, pygame.Rect(i*w, j*h, width/DIM, height/DIM), 2)
-                
-        
 
-        pygame.display.update()
+        pygame.display.flip()
